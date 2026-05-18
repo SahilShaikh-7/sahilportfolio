@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 const resumeLink = 'https://drive.google.com/file/d/1SdOdgYupHXqp0RKGJBqF8gzZbhunu2zN/view?usp=sharing'
 const socialLinks = [
   { name: 'GitHub', icon: Github, href: 'https://github.com/SahilShaikh-7', color: 'hover:text-foreground' },
-  { name: 'LinkedIn', icon: Linkedin, href: 'www.linkedin.com/in/sahil-shaikh77', color: 'hover:text-primary' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/sahil-shaikh77', color: 'hover:text-primary' },
   { name: 'Email', icon: Mail, href: 'mailto:sms.sahil6868@gmail.com', color: 'hover:text-secondary' },
 ]
 

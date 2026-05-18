@@ -69,7 +69,7 @@ export default function Footer() {
                 GitHub
               </a>
               <a
-                href="www.linkedin.com/in/sahil-shaikh77"
+                href="https://www.linkedin.com/in/sahil-shaikh77"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/60 hover:text-primary transition-colors"

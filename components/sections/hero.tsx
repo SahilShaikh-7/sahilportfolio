@@ -195,7 +195,7 @@ export default function Hero() {
           <motion.a
             whileHover={{ scale: 1.1, y: -5 }}
             whileTap={{ scale: 0.95 }}
-            href="www.linkedin.com/in/sahil-shaikh77"
+            href="https://www.linkedin.com/in/sahil-shaikh77"
             className="p-3 rounded-full bg-secondary/10 border border-secondary/20 text-secondary hover:bg-secondary/20 transition-colors"
           >
             <Linkedin className="w-6 h-6" />

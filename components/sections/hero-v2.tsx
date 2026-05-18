@@ -102,7 +102,7 @@ export function HeroSection() {
               >
                 {[
                   { icon: Github, href: 'https://github.com/SahilShaikh-7' },
-                  { icon: Linkedin, href: 'www.linkedin.com/in/sahil-shaikh77' },
+                  { icon: Linkedin, href: 'https://www.linkedin.com/in/sahil-shaikh77' },
                   { icon: Mail, href: 'mailto:sms.sahil6868@gmail.com' },
                 ].map((social, i) => (
                   <motion.a
