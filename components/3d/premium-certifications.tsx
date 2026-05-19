@@ -67,9 +67,9 @@ export function PremiumCertifications() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="flex items-center justify-center gap-3 mb-6 mx-auto w-fit">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-3 mb-6 mx-auto">
             <Award className="text-pink-400" size={32} />
-            <h2 className="text-5xl md:text-6xl font-bold">
+            <h2 className="text-3xl md:text-6xl font-bold text-center">
               <span className="gradient-text">Professional Certifications</span>
             </h2>
           </div>
