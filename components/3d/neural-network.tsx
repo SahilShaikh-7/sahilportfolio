@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useMemo, Suspense } from 'react'
+import React, { useRef, useMemo, Suspense, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
