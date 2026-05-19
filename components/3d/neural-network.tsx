@@ -11,15 +11,17 @@ function InteractiveNetwork() {
   const pointsRef = useRef<THREE.Points>(null!)
   const linesRef = useRef<THREE.LineSegments>(null!)
   const groupRef = useRef<THREE.Group>(null!)
-  const { mouse, viewport } = useThree()
+  const cursorRef = useRef<THREE.Mesh>(null!)
+  
+  const { mouse, viewport, camera } = useThree()
   const { resolvedTheme } = useTheme()
 
-  // Reduced to 120 for safe performance across all devices (O(N^2) complexity limit)
-  const particleCount = 120
+  const particleCount = 150
   const maxDistance = 3.5
 
   const mousePosition3D = useRef(new THREE.Vector3())
   const targetRotation = useRef({ x: 0, y: 0 })
+  const isPointerDown = useRef(false)
 
   const [positions, lines, colors] = useMemo(() => {
     const positions = new Float32Array(particleCount * 3)
@@ -49,7 +51,8 @@ function InteractiveNetwork() {
       colors[i * 3 + 2] = mixedColor.b
     }
 
-    const lines = new Float32Array((particleCount * particleCount) * 3 * 2)
+    const maxLines = (particleCount * particleCount) + particleCount * 2
+    const lines = new Float32Array(maxLines * 3 * 2)
     return [positions, lines, colors]
   }, [particleCount, resolvedTheme])
 
@@ -66,14 +69,36 @@ function InteractiveNetwork() {
         positions[i * 3 + 2]
       )
     }))
-  }, [positions])
+  }, [positions, particleCount])
 
-  useFrame(() => {
+  useEffect(() => {
+    const handleDown = () => (isPointerDown.current = true)
+    const handleUp = () => (isPointerDown.current = false)
+    window.addEventListener('pointerdown', handleDown)
+    window.addEventListener('pointerup', handleUp)
+    return () => {
+      window.removeEventListener('pointerdown', handleDown)
+      window.removeEventListener('pointerup', handleUp)
+    }
+  }, [])
+
+  useFrame((state) => {
     if (!pointsRef.current || !linesRef.current || !groupRef.current) return
 
-    const x = (mouse.x * viewport.width) / 2
-    const y = (mouse.y * viewport.height) / 2
-    mousePosition3D.current.set(x, y, 0)
+    mousePosition3D.current.set(mouse.x, mouse.y, 0.5)
+    mousePosition3D.current.unproject(camera)
+    mousePosition3D.current.sub(camera.position).normalize()
+    const distance = -camera.position.z / (mousePosition3D.current.z || 0.01)
+    const cursorWorldPos = camera.position.clone().add(mousePosition3D.current.multiplyScalar(distance))
+    
+    const localMousePos = cursorWorldPos.clone()
+    groupRef.current.worldToLocal(localMousePos)
+
+    if (cursorRef.current) {
+      cursorRef.current.position.copy(localMousePos)
+      const scale = 1 + Math.sin(state.clock.elapsedTime * 5) * 0.2 + (isPointerDown.current ? 0.5 : 0)
+      cursorRef.current.scale.set(scale, scale, scale)
+    }
 
     const posArray = pointsRef.current.geometry.attributes.position.array as Float32Array
     const linePositions = linesRef.current.geometry.attributes.position.array as Float32Array
@@ -85,16 +110,44 @@ function InteractiveNetwork() {
       const i3 = i * 3
       const nodePos = new THREE.Vector3(posArray[i3], posArray[i3+1], posArray[i3+2])
       
-      const distToMouse = nodePos.distanceTo(mousePosition3D.current)
+      const distToMouse = nodePos.distanceTo(localMousePos)
       const force = new THREE.Vector3()
-      if (distToMouse < 4) {
-        force.subVectors(nodePos, mousePosition3D.current).normalize().multiplyScalar((4 - distToMouse) * 0.015)
+
+      if (isPointerDown.current) {
+        if (distToMouse < 8) {
+          force.subVectors(nodePos, localMousePos).normalize().multiplyScalar(0.15 / Math.max(distToMouse, 0.1))
+        }
+      } else {
+        if (distToMouse < 4) {
+          if (distToMouse > 1.5) {
+            force.subVectors(localMousePos, nodePos).normalize().multiplyScalar(0.01)
+          } else {
+            force.subVectors(nodePos, localMousePos).normalize().multiplyScalar((1.5 - distToMouse) * 0.03)
+          }
+
+          const alpha = 1.0 - (distToMouse / 4)
+          linePositions[lineIndex * 3] = posArray[i3]
+          linePositions[lineIndex * 3 + 1] = posArray[i3 + 1]
+          linePositions[lineIndex * 3 + 2] = posArray[i3 + 2]
+          lineColors[lineIndex * 3] = colors[i3] * alpha
+          lineColors[lineIndex * 3 + 1] = colors[i3+1] * alpha
+          lineColors[lineIndex * 3 + 2] = colors[i3+2] * alpha
+          lineIndex++
+          
+          linePositions[lineIndex * 3] = localMousePos.x
+          linePositions[lineIndex * 3 + 1] = localMousePos.y
+          linePositions[lineIndex * 3 + 2] = localMousePos.z
+          lineColors[lineIndex * 3] = resolvedTheme === 'light' ? 0.2 : 0.0
+          lineColors[lineIndex * 3 + 1] = resolvedTheme === 'light' ? 0.5 : 1.0
+          lineColors[lineIndex * 3 + 2] = resolvedTheme === 'light' ? 1.0 : 1.0
+          lineIndex++
+        }
       }
 
       nodes[i].velocity.add(force)
-      const returnForce = new THREE.Vector3().subVectors(nodes[i].basePosition, nodePos).multiplyScalar(0.003)
+      const returnForce = new THREE.Vector3().subVectors(nodes[i].basePosition, nodePos).multiplyScalar(0.005)
       nodes[i].velocity.add(returnForce)
-      nodes[i].velocity.multiplyScalar(0.92)
+      nodes[i].velocity.multiplyScalar(0.9)
 
       posArray[i3] += nodes[i].velocity.x
       posArray[i3 + 1] += nodes[i].velocity.y
@@ -135,8 +188,8 @@ function InteractiveNetwork() {
     linesRef.current.geometry.attributes.color.needsUpdate = true
     linesRef.current.geometry.setDrawRange(0, lineIndex)
     
-    targetRotation.current.x = (mouse.y * Math.PI) / 8
-    targetRotation.current.y = (mouse.x * Math.PI) / 8
+    targetRotation.current.x = (mouse.y * Math.PI) / 6
+    targetRotation.current.y = (mouse.x * Math.PI) / 6
     
     groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.05
     groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.05
@@ -144,6 +197,14 @@ function InteractiveNetwork() {
 
   return (
     <group ref={groupRef}>
+      <mesh ref={cursorRef}>
+        <sphereGeometry args={[0.15, 16, 16]} />
+        <meshBasicMaterial 
+          color={resolvedTheme === 'light' ? '#3b82f6' : '#06b6d4'} 
+          transparent 
+          opacity={0.8} 
+        />
+      </mesh>
       <points ref={pointsRef}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
