@@ -2,8 +2,8 @@
 
 import { useState, useEffect, type MouseEvent } from 'react'
 import { useTheme } from 'next-themes'
-import { motion } from 'framer-motion'
-import { Moon, Sun } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Moon, Sun, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const resumeLink = 'https://drive.google.com/file/d/1SdOdgYupHXqp0RKGJBqF8gzZbhunu2zN/view?usp=sharing'
@@ -21,6 +21,7 @@ export default function Navigation() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -44,6 +45,7 @@ export default function Navigation() {
 
   const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     event.preventDefault()
+    setIsMobileMenuOpen(false)
     const targetId = href.slice(1)
     const targetElement = document.getElementById(targetId)
     if (targetElement) {
@@ -107,7 +109,7 @@ export default function Navigation() {
               </motion.button>
             )}
 
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="hidden md:block">
               <Button
                 asChild
                 className="bg-white/10 border border-white/10 text-foreground hover:bg-white/20 font-semibold rounded-full px-5 py-2"
@@ -119,7 +121,7 @@ export default function Navigation() {
             </motion.div>
 
             {/* CTA Button */}
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="hidden md:block">
               <Button
                 asChild
                 className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white font-semibold rounded-full px-6 py-2"
@@ -128,8 +130,59 @@ export default function Navigation() {
               </Button>
             </motion.div>
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-foreground/80 hover:text-foreground"
+            >
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-background/95 backdrop-blur-md border-b border-border overflow-hidden"
+          >
+            <div className="px-4 pt-2 pb-6 space-y-4 flex flex-col">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
+                    activeSection === item.href.slice(1)
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-foreground/80 hover:bg-muted hover:text-foreground'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ))}
+              <div className="pt-4 flex flex-col gap-3">
+                <Button asChild className="w-full bg-white/10 border border-white/10 text-foreground hover:bg-white/20 font-semibold">
+                  <a href={resumeLink} target="_blank" rel="noopener noreferrer">
+                    Resume
+                  </a>
+                </Button>
+                <Button asChild className="w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold">
+                  <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                    Hire Me
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }

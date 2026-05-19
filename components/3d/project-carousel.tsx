@@ -92,7 +92,7 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
 
   return (
     <motion.div
-      className="relative h-[340px] cursor-pointer"
+      className="relative h-[420px] cursor-pointer"
       onClick={() => setIsFlipped(!isFlipped)}
       whileHover={{ scale: 1.05, y: -10 }}
     >
@@ -199,7 +199,7 @@ export function ProjectCarousel() {
         className="w-full"
       >
         {projects.map((project, index) => (
-          <SwiperSlide key={index} style={{ width: '600px', height: 'auto' }}>
+          <SwiperSlide key={index} className="!w-[min(600px,90vw)] !h-auto">
             <ProjectCard project={project} index={index} />
           </SwiperSlide>
         ))}

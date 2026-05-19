@@ -32,7 +32,7 @@ export function EducationCard({ degree, school, duration, cgpa, subjects }: Educ
 
   return (
     <motion.div
-      className="relative h-96 rounded-3xl overflow-hidden"
+      className="relative h-auto min-h-[24rem] rounded-3xl overflow-hidden flex flex-col"
       whileHover={{ y: -10 }}
       transition={{ duration: 0.3 }}
     >
@@ -51,7 +51,7 @@ export function EducationCard({ degree, school, duration, cgpa, subjects }: Educ
 
       <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900 rounded-3xl opacity-95 backdrop-blur-xl" />
 
-      <div className="relative z-10 p-8 h-full flex flex-col justify-between text-slate-900 dark:text-white">
+      <div className="relative z-10 p-8 flex-1 flex flex-col justify-between text-slate-900 dark:text-white">
         <div>
           <h3 className="text-3xl font-bold mb-2">{degree}</h3>
           <p className="text-lg text-blue-600 dark:text-blue-300 mb-1">{school}</p>

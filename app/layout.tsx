@@ -79,7 +79,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className={`${geist.className} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${geist.className} font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
