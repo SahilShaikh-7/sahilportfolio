@@ -4,13 +4,32 @@ import { motion } from 'framer-motion'
 import { EducationCard } from '@/components/3d/education-card'
 import { BookOpen } from 'lucide-react'
 
+type ScoreType = 'CGPA' | 'Percentage';
+
 const educationData = [
   {
     degree: 'B.E. Computer Engineering',
     school: 'Sandip Institute of Technology & Research Center',
     duration: 'SPPU 2021 - 2025',
-    cgpa: 7.1,
+    score: 7.1,
+    scoreType: 'CGPA' as ScoreType,
     subjects: ['Data Structures & Algorithms', 'Web Development', 'AI/ML', 'Operating Systems', 'Database Management'],
+  },
+  {
+    degree: 'Higher Secondary Certificate (HSC)',
+    school: 'MSBSHSE Board',
+    duration: '2019 - 2021',
+    score: 79,
+    scoreType: 'Percentage' as ScoreType,
+    subjects: ['Physics', 'Chemistry', 'Mathematics', 'English', 'Computer Science'],
+  },
+  {
+    degree: 'Secondary School Certificate (SSC)',
+    school: 'MSBSHSE Board',
+    duration: '2018 - 2019',
+    score: 86,
+    scoreType: 'Percentage' as ScoreType,
+    subjects: ['Mathematics', 'Science', 'English', 'Social Science'],
   },
 ]
 

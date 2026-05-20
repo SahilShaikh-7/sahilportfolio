@@ -17,7 +17,7 @@ const features = [
   {
     icon: Brain,
     title: 'AI Enthusiast',
-    description: 'Integrating AI and ML into modern web applications',
+    description: 'Integrating AI and ML into modern web applications ',
   },
 ]
 

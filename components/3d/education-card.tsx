@@ -8,12 +8,16 @@ interface EducationCardProps {
   degree: string
   school: string
   duration: string
-  cgpa: number
+  score?: number
+  cgpa?: number // keeping cgpa for backwards compatibility if needed
+  scoreType?: 'CGPA' | 'Percentage'
   subjects: string[]
 }
 
-export function EducationCard({ degree, school, duration, cgpa, subjects }: EducationCardProps) {
+export function EducationCard({ degree, school, duration, score, cgpa, scoreType = 'CGPA', subjects }: EducationCardProps) {
   const counterRef = useRef<HTMLDivElement>(null)
+  
+  const displayScore = score ?? cgpa ?? 0
 
   useEffect(() => {
     if (counterRef.current) {
@@ -21,14 +25,14 @@ export function EducationCard({ degree, school, duration, cgpa, subjects }: Educ
         counterRef.current,
         { innerText: '0' },
         {
-          innerText: cgpa.toFixed(1),
+          innerText: scoreType === 'Percentage' ? displayScore.toFixed(0) : displayScore.toFixed(1),
           duration: 2,
           ease: 'power2.out',
-          snap: { innerText: 0.1 },
+          snap: { innerText: scoreType === 'Percentage' ? 1 : 0.1 },
         }
       )
     }
-  }, [cgpa])
+  }, [displayScore, scoreType])
 
   return (
     <motion.div
@@ -59,12 +63,12 @@ export function EducationCard({ degree, school, duration, cgpa, subjects }: Educ
         </div>
 
         <div className="space-y-6">
-          {/* CGPA Counter */}
+          {/* CGPA / Percentage Counter */}
           <motion.div
             className="bg-black/5 dark:bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-black/10 dark:border-white/20"
             whileHover={{ scale: 1.05 }}
           >
-            <p className="text-sm text-slate-600 dark:text-gray-300 mb-2">CGPA</p>
+            <p className="text-sm text-slate-600 dark:text-gray-300 mb-2">{scoreType === 'Percentage' ? 'Percentage' : 'CGPA'}</p>
             <div className="flex items-center gap-2">
               <span
                 ref={counterRef}
@@ -72,7 +76,7 @@ export function EducationCard({ degree, school, duration, cgpa, subjects }: Educ
               >
                 0
               </span>
-              <span className="text-2xl text-slate-500 dark:text-gray-400">/10</span>
+              <span className="text-2xl text-slate-500 dark:text-gray-400">{scoreType === 'Percentage' ? '%' : '/10'}</span>
             </div>
           </motion.div>
 
