@@ -16,7 +16,7 @@ function InteractiveNetwork() {
   const { mouse, viewport, camera } = useThree()
   const { resolvedTheme } = useTheme()
 
-  const particleCount = 180
+  const particleCount = 230
   const maxDistance = 3.5
 
   const mousePosition3D = useRef(new THREE.Vector3())
