@@ -10,7 +10,7 @@ const educationData = [
   {
     degree: 'B.E. Computer Engineering',
     school: 'Sandip Institute of Technology & Research Center',
-    duration: 'SPPU 2021 - 2025',
+    duration: 'SPPU 2022 - 2026',
     score: 7.1,
     scoreType: 'CGPA' as ScoreType,
     subjects: ['Data Structures & Algorithms', 'Web Development', 'AI/ML', 'Operating Systems', 'Database Management'],
