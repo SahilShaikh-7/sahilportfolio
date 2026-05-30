@@ -91,7 +91,7 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
 
   return (
     <motion.div
-      className="relative h-[480px] sm:h-[470px] md:h-[480px] cursor-pointer group/card select-none"
+      className="relative h-[500px] cursor-pointer group/card select-none"
       onClick={() => setIsFlipped(!isFlipped)}
       whileHover={{ scale: 1.02, y: -6 }}
       transition={{ duration: 0.3 }}
@@ -113,8 +113,8 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
           {/* Subtle brand color glow behind the content */}
           <div className={`absolute -top-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-br ${project.gradient} opacity-15 blur-3xl pointer-events-none`} />
 
-          {/* Browser Window Showcase for Screenshot - Fixed responsive height */}
-          <div className="relative w-full h-[160px] sm:h-[180px] md:h-[200px] rounded-2xl overflow-hidden border border-white/15 bg-slate-950/60 flex-shrink-0 group/browser">
+          {/* Browser Window Showcase for Screenshot - Enlarged fixed heights */}
+          <div className="relative w-full h-[200px] sm:h-[230px] md:h-[260px] rounded-2xl overflow-hidden border border-white/15 bg-slate-950/60 flex-shrink-0 group/browser">
             {/* Top Browser Bar Mockup */}
             <div className="absolute top-0 left-0 right-0 h-6 bg-slate-900/90 border-b border-white/5 flex items-center px-3 gap-1.5 z-20">
               <div className="w-1.5 h-1.5 rounded-full bg-rose-500/80" />
@@ -143,7 +143,7 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
               <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1.5 line-clamp-2 group-hover/card:text-purple-400 transition-colors duration-300">
                 {project.title}
               </h3>
-              <p className="text-white/70 text-xs sm:text-sm line-clamp-2 sm:line-clamp-3 mb-3 leading-relaxed">
+              <p className="text-white/70 text-xs sm:text-sm line-clamp-2 mb-3 leading-relaxed">
                 {project.description}
               </p>
             </div>
@@ -203,17 +203,17 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
               <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 leading-snug">
                 {project.title}
               </h3>
-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-4 sm:line-clamp-5">
+              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-5 sm:line-clamp-6">
                 {project.description}
               </p>
             </div>
 
             {/* Bottom Tech & CTA Area */}
-            <div>
+            <div className="mt-auto">
               <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-purple-400 mb-2 font-bold select-none">
                 Technologies
               </p>
-              <div className="flex flex-wrap gap-1.5 max-h-[85px] sm:max-h-[105px] overflow-hidden mb-4">
+              <div className="flex flex-wrap gap-1.5 max-h-[100px] sm:max-h-[120px] overflow-hidden mb-4">
                 {project.tech.map((tech, i) => (
                   <span
                     key={i}
