@@ -91,7 +91,7 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
 
   return (
     <motion.div
-      className="relative h-[460px] md:h-[450px] cursor-pointer group/card select-none"
+      className="relative h-[480px] sm:h-[470px] md:h-[480px] cursor-pointer group/card select-none"
       onClick={() => setIsFlipped(!isFlipped)}
       whileHover={{ scale: 1.02, y: -6 }}
       transition={{ duration: 0.3 }}
@@ -107,14 +107,14 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
 
         {/* Front */}
         <motion.div
-          className="absolute inset-0 rounded-3xl p-4 sm:p-5 md:p-6 bg-slate-950/40 backdrop-blur-xl border border-white/10 flex flex-col justify-between overflow-hidden"
+          className="absolute inset-0 rounded-3xl p-4 sm:p-5 bg-slate-950/40 backdrop-blur-xl border border-white/10 flex flex-col justify-between overflow-hidden"
           style={{ backfaceVisibility: 'hidden' as any }}
         >
           {/* Subtle brand color glow behind the content */}
           <div className={`absolute -top-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-br ${project.gradient} opacity-15 blur-3xl pointer-events-none`} />
 
-          {/* Browser Window Showcase for Screenshot */}
-          <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] rounded-2xl overflow-hidden border border-white/15 bg-slate-950/60 flex-shrink-0 group/browser">
+          {/* Browser Window Showcase for Screenshot - Fixed responsive height */}
+          <div className="relative w-full h-[160px] sm:h-[180px] md:h-[200px] rounded-2xl overflow-hidden border border-white/15 bg-slate-950/60 flex-shrink-0 group/browser">
             {/* Top Browser Bar Mockup */}
             <div className="absolute top-0 left-0 right-0 h-6 bg-slate-900/90 border-b border-white/5 flex items-center px-3 gap-1.5 z-20">
               <div className="w-1.5 h-1.5 rounded-full bg-rose-500/80" />
@@ -138,12 +138,12 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
           </div>
 
           {/* Body Content */}
-          <div className="relative z-10 flex flex-col flex-grow mt-4 justify-between">
+          <div className="relative z-10 flex flex-col flex-grow mt-3 sm:mt-4 justify-between">
             <div>
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 line-clamp-1 group-hover/card:text-purple-400 transition-colors duration-300">
+              <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1.5 line-clamp-2 group-hover/card:text-purple-400 transition-colors duration-300">
                 {project.title}
               </h3>
-              <p className="text-white/70 text-xs sm:text-sm line-clamp-2 md:line-clamp-3 mb-4 leading-relaxed">
+              <p className="text-white/70 text-xs sm:text-sm line-clamp-2 sm:line-clamp-3 mb-3 leading-relaxed">
                 {project.description}
               </p>
             </div>
@@ -180,7 +180,7 @@ function ProjectCard({ project, index }: { project: ProjectCardProps; index: num
 
         {/* Back */}
         <motion.div
-          className="absolute inset-0 rounded-3xl p-4 sm:p-5 md:p-6 bg-slate-950/90 backdrop-blur-xl border border-white/10 flex flex-col justify-between overflow-hidden"
+          className="absolute inset-0 rounded-3xl p-4 sm:p-5 bg-slate-950/90 backdrop-blur-xl border border-white/10 flex flex-col justify-between overflow-hidden"
           style={{
             backfaceVisibility: 'hidden' as any,
             transform: 'rotateY(180deg)',
