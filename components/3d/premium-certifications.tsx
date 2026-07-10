@@ -13,7 +13,7 @@ const certifications = [
     description: 'Oracle Cloud Infrastructure Certified AI Foundations Associate – Validated foundational expertise in Artificial Intelligence, Generative AI, Machine Learning, Prompt Engineering, Responsible AI, and Oracle Cloud Infrastructure AI services.',
     skills: ['Artificial Intelligence (AI)', 'Generative AI', 'Oracle Cloud Infrastructure (OCI)', 'Machine Learning', 'Cloud Computing'],
     icon: <Cpu className="w-10 h-10 text-cyan-400" />,
-    gradient: 'from-orange-500 via-amber-500 to-yellow-500',
+    gradient: 'from-slate-700 via-emerald-600 to-green-500',
     link: 'https://drive.google.com/file/d/1o0brLoman5L5HtKz7MHu1NtwTzn5HfRw/view'
   },
   {
