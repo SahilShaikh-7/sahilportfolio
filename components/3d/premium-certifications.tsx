@@ -185,7 +185,7 @@ export function PremiumCertifications() {
         >
           {[
             {
-              number: '3',
+              number: '4',
               label: 'Professional Certifications',
               icon: '📜',
               description: 'From leading organizations worldwide'
