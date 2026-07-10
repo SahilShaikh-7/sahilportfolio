@@ -7,6 +7,17 @@ import { Award, ExternalLink, Calendar, Cpu, Sparkles, ShieldCheck } from 'lucid
 const certifications = [
   {
     id: 1,
+    title: 'Oracle Cloud Infrastructure Certified AI Foundations Associate',
+    issuer: 'Oracle',
+    date: 'July 2026',
+    description: 'Oracle Cloud Infrastructure Certified AI Foundations Associate – Validated foundational expertise in Artificial Intelligence, Generative AI, Machine Learning, Prompt Engineering, Responsible AI, and Oracle Cloud Infrastructure AI services.',
+    skills: ['Artificial Intelligence (AI)', 'Generative AI', 'Oracle Cloud Infrastructure (OCI)', 'Machine Learning', 'Cloud Computing'],
+    icon: <Cpu className="w-10 h-10 text-cyan-400" />,
+    gradient: 'from-purple-600 via-pink-600 to-red-600',
+    link: 'https://drive.google.com/file/d/1o0brLoman5L5HtKz7MHu1NtwTzn5HfRw/view'
+  },
+  {
+    id: 2,
     title: 'AI & DevOps Engineer Program',
     issuer: 'Reliance Industries',
     date: 'Sept 2025',
@@ -17,7 +28,7 @@ const certifications = [
     link: 'https://drive.google.com/file/d/1FUXskB2PmGzwBR4cQZQW59bXagW-Y7kj/view'
   },
   {
-    id: 2,
+    id: 3,
     title: 'Software Engineering Simulation',
     issuer: 'EA - Forage Virtual Experience',
     date: 'Feb 2024',
@@ -28,7 +39,7 @@ const certifications = [
     link: 'https://drive.google.com/file/d/13wyd2gDMOXhVkHkLrf67f97QKEsicO7E/view'
   },
   {
-    id: 3,
+    id: 4,
     title: 'Generative AI Certification',
     issuer: 'Microsoft & LinkedIn Learning',
     date: 'Jan 2025',
