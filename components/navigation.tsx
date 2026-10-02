@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
-const resumeLink = 'https://drive.google.com/file/d/1ranhMqobOFaoXPYTuFodDdIxBBxOO-xq/view?usp=sharing'
+const resumeLink = 'https://drive.google.com/file/d/1bSiFIzKBZy5TnZ1MAq-W7ZyUubXN33HO/view?usp=sharing'
 const navItems = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
